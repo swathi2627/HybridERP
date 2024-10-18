@@ -59,7 +59,18 @@ public class DriverScript {
 						if (ObjType.equalsIgnoreCase("closeBrowser")) {
 							FunctionLibrary.closeBrowser();
 						}
+						if (ObjType.equalsIgnoreCase("dropDownActiion")) {
+							FunctionLibrary.dropDownActiion(LocatorType, LocatorValue, TestData);
+						}
 
+						if (ObjType.equalsIgnoreCase("captureStock")) {
+							FunctionLibrary.captureStock(LocatorType, LocatorValue);
+						}
+						if (ObjType.equalsIgnoreCase("stockTable")) {
+							FunctionLibrary.stockTable();
+						}
+						
+						// write as pass into sheet
 						excel.setCellData(TCModule, j, 5, "pass", outputpath);
 						Module_Stsus = "true";
 					} catch (Exception e) {
@@ -71,10 +82,10 @@ public class DriverScript {
 						excel.setCellData(TCSheet, i, 3, "pass", outputpath);
 					}
 				}
-					if (Module_New.equalsIgnoreCase("false")) {
-                          excel.setCellData(TCSheet, i, 3, "fail", outputpath);
-					}
-				
+				if (Module_New.equalsIgnoreCase("false")) {
+					excel.setCellData(TCSheet, i, 3, "fail", outputpath);
+				}
+
 			}
 
 			else {
