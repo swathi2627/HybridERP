@@ -1,6 +1,7 @@
 package driverFactory;
 
 import org.openqa.selenium.WebDriver;
+import org.w3.x2000.x09.xmldsig.ObjectType;
 
 import commonFunctions.FunctionLibrary;
 import utilities.ExcelFileUtilities;
@@ -70,6 +71,21 @@ public class DriverScript {
 							FunctionLibrary.stockTable();
 						}
 						
+						if(ObjType.equalsIgnoreCase("capturesup"))
+						{
+							FunctionLibrary.capturesup(LocatorType, LocatorValue);
+						}
+						
+						if(ObjType.equalsIgnoreCase("suppliertable")) {
+							FunctionLibrary.suppliertable();
+						}
+						
+						if(ObjType.equalsIgnoreCase("capturecus")) {
+							FunctionLibrary.capturecus(LocatorType, LocatorValue);
+						}
+						if(ObjType.equalsIgnoreCase("customertable")) {
+							FunctionLibrary.customertable();
+						}
 						// write as pass into sheet
 						excel.setCellData(TCModule, j, 5, "pass", outputpath);
 						Module_Stsus = "true";

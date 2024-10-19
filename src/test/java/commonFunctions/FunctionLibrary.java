@@ -3,8 +3,10 @@ package commonFunctions;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
 
@@ -146,7 +148,8 @@ public class FunctionLibrary {
 		BufferedReader br = new BufferedReader(fr);
 		String exp_data = br.readLine();
 		br.close();
-		if (!(driver.findElement(By.xpath(property.getProperty("search-textbox"))).isDisplayed()));
+		if (!(driver.findElement(By.xpath(property.getProperty("search-textbox"))).isDisplayed()))
+			;
 		driver.findElement(By.xpath(property.getProperty("search-panel"))).click();
 
 		driver.findElement(By.xpath(property.getProperty("search-textbox"))).clear();
@@ -154,13 +157,103 @@ public class FunctionLibrary {
 		driver.findElement(By.xpath(property.getProperty("search-textbox"))).sendKeys(exp_data);
 		driver.findElement(By.xpath(property.getProperty("search-button"))).click();
 		Thread.sleep(2000);
-		String act_data =driver.findElement(By.xpath("//table[@class='table ewTable']/tbody/tr/td[8]/div/span/span")).getText();
+		String act_data = driver.findElement(By.xpath("//table[@class='table ewTable']/tbody/tr/td[8]/div/span/span"))
+				.getText();
 		Reporter.log(act_data + "...." + exp_data);
 		try {
-		Assert.assertEquals(exp_data,act_data, "Stock not found");
+			Assert.assertEquals(exp_data, act_data, "Stock not found");
+		} catch (AssertionError e) {
+			System.out.println(e.getMessage());
 		}
-		catch (AssertionError e) {
-	     System.out.println(e.getMessage());
+	}
+
+	public static void capturesup(String LocatorType, String LocatorValue) throws Throwable {
+		String suppliernum = "";
+		if (LocatorType.equalsIgnoreCase("xpath")) {
+			suppliernum = driver.findElement(By.xpath(LocatorValue)).getAttribute("value");
+		}
+		if (LocatorType.equalsIgnoreCase("id")) {
+			suppliernum = driver.findElement(By.id(LocatorValue)).getAttribute("value");
+		}
+		if (LocatorType.equalsIgnoreCase("name")) {
+			suppliernum = driver.findElement(By.name(LocatorValue)).getAttribute("value");
+		}
+
+		FileWriter fw = new FileWriter("./CaptureData/supliernum.txt");
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write(suppliernum);
+		bw.flush();
+		bw.close();
+	}
+
+	public static void suppliertable() throws Throwable {
+		FileReader fr = new FileReader(("./CaptureData/supliernum.txt"));
+		BufferedReader br = new BufferedReader(fr);
+		String exp_data = br.readLine();
+		br.close();
+		if (!(driver.findElement(By.xpath(property.getProperty("search-textbox"))).isDisplayed()))
+			;
+		driver.findElement(By.xpath(property.getProperty("search-panel"))).click();
+
+		driver.findElement(By.xpath(property.getProperty("search-textbox"))).clear();
+
+		driver.findElement(By.xpath(property.getProperty("search-textbox"))).sendKeys(exp_data);
+		driver.findElement(By.xpath(property.getProperty("search-button"))).click();
+		Thread.sleep(2000);
+
+		String act_data = driver
+				.findElement(By.xpath("//table[@class='table ewTable']/tbody/tr[1]/td[6]/div/span/span")).getText();
+		Reporter.log(act_data + "...." + exp_data);
+		try {
+			Assert.assertEquals(exp_data, act_data, "Stock not found");
+		} catch (AssertionError e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public static void capturecus(String LocatorType, String LocatorValue) throws Throwable {
+		String customernum = "";
+
+		if (LocatorType.equalsIgnoreCase("xpath")) {
+			customernum = driver.findElement(By.xpath(LocatorValue)).getAttribute("value");
+		}
+		if (LocatorType.equalsIgnoreCase("id")) {
+			customernum = driver.findElement(By.id(LocatorValue)).getAttribute("value");
+		}
+		if (LocatorType.equalsIgnoreCase("name")) {
+			customernum = driver.findElement(By.name(LocatorValue)).getAttribute("value");
+		}
+
+		FileWriter fw = new FileWriter("./CaptureData/customernumber.txt");
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write(customernum);
+		bw.flush();
+		bw.close();
+	}
+	
+	public static void customertable() throws Throwable {
+		FileReader fr = new FileReader(("./CaptureData/customernumber.txt"));
+		BufferedReader br = new BufferedReader(fr);
+		String exp_data = br.readLine();
+		br.close();
+		if (!(driver.findElement(By.xpath(property.getProperty("search-textbox"))).isDisplayed()))
+			;
+		driver.findElement(By.xpath(property.getProperty("search-panel"))).click();
+
+		driver.findElement(By.xpath(property.getProperty("search-textbox"))).clear();
+
+		driver.findElement(By.xpath(property.getProperty("search-textbox"))).sendKeys(exp_data);
+		driver.findElement(By.xpath(property.getProperty("search-button"))).click();
+		Thread.sleep(2000);
+
+		String act_data = driver
+				.findElement(By.xpath("//table[@class='table ewTable']/tbody/tr[1]/td[5]/div/span/span")).getText();
+		Reporter.log(act_data + "...." + exp_data);
+		try {
+			Assert.assertEquals(exp_data, act_data, "customer not found");
+		} catch (AssertionError e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
