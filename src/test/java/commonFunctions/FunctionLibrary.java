@@ -3,11 +3,12 @@ package commonFunctions;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
@@ -255,6 +256,12 @@ public class FunctionLibrary {
 		} catch (AssertionError e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	public static String generateDate() {
+		Date date = new Date();
+		 DateFormat format = new SimpleDateFormat("YYYY_MM_dd");
+		 return format.format(date);
 	}
 
 }
